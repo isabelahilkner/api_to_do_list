@@ -9,6 +9,11 @@ module.exports = (req, res) => {
   if (url === '/tasks' && method === 'GET') {
     return taskController.listTasks(req, res);
   }
+  // GET /tasks/:id
+  if (url.startsWith('/tasks/') && method === 'GET') {
+    const id = url.split('/')[2];
+    return taskController.listTasksid(req, res, id);
+  }
 
   // POST /tasks
   if (url === '/tasks' && method === 'POST') {

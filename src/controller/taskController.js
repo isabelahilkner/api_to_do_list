@@ -19,7 +19,7 @@ const getRequestBody = (req) => {
 const createTask = async (req, res) => {
   const body = await getRequestBody(req);
 
-  const task = taskService.addTask(body.title);
+  const task = taskService.addTask(body.title, body.completed);
 
   res.statusCode = 201;
   res.end(JSON.stringify(task));
@@ -32,11 +32,28 @@ const listTasks = (req, res) => {
   res.statusCode = 200;
   res.end(JSON.stringify(tasks));
 };
+
+// Listar tarefa específica
+const listTasksid = (req, res, id) => {
+  const task = taskService.getTasks().find(t => t.id == id);
+
+  if (!task) {
+    res.statusCode = 404;
+    return res.end(JSON.stringify(
+      { message: 'Não encontrada' }
+    ));
+  }
+
+  res.statusCode = 200;
+  res.end(JSON.stringify(task));
+};
+
+
 // Atualizar tarefa
 const updateTask = async (req, res, id) => {
   const body = await getRequestBody(req);
 
-  const task = taskService.updateTask(id, body.title);
+  const task = taskService.updateTask(id, body.title, body.completed);
 
   if (!task) {
     res.statusCode = 404;
@@ -65,6 +82,7 @@ const deleteTask = (req, res, id) => {
 module.exports = {
   createTask,
   listTasks,
+  listTasksid,
   updateTask,
   deleteTask
 };

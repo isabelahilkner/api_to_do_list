@@ -1,37 +1,38 @@
-const taskModel = require('../models/taskModel');
+const { createTask } = require('../models/taskModel');
 
-function createTask(title) {
-  if (!title) {
-    throw new Error('Título é obrigatório');
-  }
+let tasks = [];
+let idCounter = 1;
 
-  return taskModel.createTask(title);
-}
+// Criar
+const addTask = (title) => {
+  const task = createTask(idCounter++, title);
+  tasks.push(task);
+  return task;
+};
 
-function getTasks() {
-  return taskModel.getTasks();
-}
+// Listar
+const getTasks = () => tasks;
 
-function updateTask(id, data) {
-  const updated = taskModel.updateTask(id, data);
-  if (!updated) {
-    throw new Error('Tarefa não encontrada');
-  }
+// Atualizar
+const updateTask = (id, title) => {
+  const task = tasks.find(t => t.id == id);
+  if (!task) return null;
 
-  return updated;
-}
+  task.title = title;
+  return task;
+};
 
-function deleteTask(id) {
-  const success = taskModel.deleteTask(id);
-  if (!success) {
-    throw new Error('Tarefa não encontrada');
-  }
+// Deletar
+const deleteTask = (id) => {
+  const index = tasks.findIndex(t => t.id == id);
+  if (index === -1) return false;
 
-  return { message: 'Removida' };
-}
+  tasks.splice(index, 1);
+  return true;
+};
 
 module.exports = {
-  createTask,
+  addTask,
   getTasks,
   updateTask,
   deleteTask

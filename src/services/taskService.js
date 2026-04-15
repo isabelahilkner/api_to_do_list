@@ -4,8 +4,8 @@ let tasks = [];
 let idCounter = 1;
 
 // Criar
-const addTask = (title) => {
-  const task = createTask(idCounter++, title);
+const addTask = (title, completed = false) => {
+  const task = createTask(idCounter++, title, completed ?? false);
   tasks.push(task);
   return task;
 };
@@ -14,11 +14,13 @@ const addTask = (title) => {
 const getTasks = () => tasks;
 
 // Atualizar
-const updateTask = (id, title) => {
+const updateTask = (id, title, completed) => {
   const task = tasks.find(t => t.id == id);
   if (!task) return null;
 
-  task.title = title;
+  if (title !== undefined) task.title = title;
+  if (completed !== undefined) task.completed = completed;
+
   return task;
 };
 

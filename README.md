@@ -53,3 +53,7 @@
 ."Completed" foi colocado em taskModel, taskController e taskService.
 
 .Rota para GET: tasks/id adicionada em taskRoutes, busca de task por id em taskServices e em taskController
+
+6- Código vídeo:
+
+https://youtu.be/CRDRZvyQAPo?si=aSPNgacwJpCPi5nl
